@@ -2,51 +2,53 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Happy Valentine’s Day ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
+}
 
-body{
-min-height:100vh;
+html,body{
+height:100%;
+width:100%;
 font-family:'Poppins',sans-serif;
+overflow:hidden;
+color:white;
+}
+
+/* MOBILE FIRST BACKGROUND */
+body{
 display:flex;
 justify-content:center;
 align-items:center;
 text-align:center;
-color:white;
-background:url("background.jpg") no-repeat center center/cover;
-animation:zoomBg 30s infinite alternate ease-in-out;
+background:url("background.jpg") no-repeat center bottom;
+background-size:cover;
 position:relative;
-overflow:hidden;
-padding:20px;
 }
 
-@keyframes zoomBg{
-from{background-size:100%}
-to{background-size:110%}
-}
-
+/* Dark overlay for readability */
 .overlay{
 position:absolute;
-width:100%;
-height:100%;
-background:linear-gradient(to top,rgba(0,0,0,0.85),rgba(0,0,0,0.4));
+inset:0;
+background:linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.3));
 z-index:0;
 }
 
-/* Constellation */
+/* Constellation Name */
 .constellation{
 position:absolute;
-top:8%;
+top:6%;
 width:100%;
-text-align:center;
-font-size:clamp(18px,4vw,28px);
-letter-spacing:clamp(6px,2vw,15px);
-color:#fff;
+font-size:20px;
+letter-spacing:8px;
 text-shadow:0 0 8px white,0 0 20px #00eaff;
 animation:twinkle 2s infinite alternate;
 z-index:2;
@@ -57,31 +59,32 @@ from{opacity:0.7}
 to{opacity:1}
 }
 
+/* Main content */
 #mainContent{
 z-index:2;
-max-width:520px;
-width:100%;
+width:90%;
+max-width:420px;
 display:flex;
 flex-direction:column;
 align-items:center;
-gap:15px;
-animation:fadeIn 2s ease forwards;
+gap:18px;
+animation:fadeIn 1.5s ease forwards;
 }
 
 @keyframes fadeIn{
-from{opacity:0;transform:translateY(20px)}
+from{opacity:0;transform:translateY(15px)}
 to{opacity:1;transform:translateY(0)}
 }
 
 h1{
 font-family:'Playfair Display',serif;
-font-size:clamp(24px,5vw,36px);
+font-size:26px;
 }
 
 #typing{
-font-size:clamp(14px,3.5vw,18px);
-min-height:80px;
+font-size:15px;
 line-height:1.6;
+min-height:80px;
 }
 
 /* Buttons */
@@ -90,42 +93,37 @@ display:flex;
 gap:15px;
 justify-content:center;
 position:relative;
-height:120px;
+height:100px;
 width:100%;
 }
 
 button{
-padding:12px 24px;
+padding:12px 22px;
 border:none;
 border-radius:30px;
 background:linear-gradient(45deg,#ff4d6d,#ff99ac);
 color:white;
-font-size:16px;
+font-size:15px;
 cursor:pointer;
-transition:0.2s;
 }
 
-button:active{
-transform:scale(0.95);
-}
-
-/* STATIC RING */
+/* Ring */
 .ring-container{
-margin-top:25px;
 display:none;
+margin-top:15px;
 }
 
 .ring-img{
-width:220px;
+width:180px;
 max-width:85%;
-filter:drop-shadow(0 25px 30px rgba(0,0,0,0.6));
+filter:drop-shadow(0 20px 25px rgba(0,0,0,0.6));
 }
 
-/* Shooting stars */
+/* Shooting Stars */
 .shooting-star{
 position:absolute;
 width:2px;
-height:100px;
+height:80px;
 background:linear-gradient(-45deg, white, transparent);
 opacity:0.8;
 transform:rotate(45deg);
@@ -134,7 +132,7 @@ animation:shoot 2s linear forwards;
 
 @keyframes shoot{
 0%{transform:translate(0,0) rotate(45deg);opacity:1}
-100%{transform:translate(600px,600px) rotate(45deg);opacity:0}
+100%{transform:translate(500px,500px) rotate(45deg);opacity:0}
 }
 
 /* Fireworks & Sparkles */
@@ -151,7 +149,7 @@ animation:explode 1s ease-out forwards;
 
 @keyframes explode{
 0%{transform:scale(1);opacity:1}
-100%{transform:scale(18);opacity:0}
+100%{transform:scale(16);opacity:0}
 }
 
 </style>
@@ -174,7 +172,7 @@ animation:explode 1s ease-out forwards;
 <img src="ring.png" class="ring-img">
 </div>
 
-<h2 id="finalMessage"></h2>
+<h3 id="finalMessage"></h3>
 </div>
 
 <script>
@@ -182,6 +180,7 @@ animation:explode 1s ease-out forwards;
 /* Valentine Message */
 let text="This Valentine’s Day, I don’t just want roses or chocolates… I want forever with you. Under this sky, I choose you today, tomorrow, and always. Will you be my forever, Palei?";
 let i=0;
+
 function startTyping(){
 let typing=document.getElementById("typing");
 let interval=setInterval(()=>{
@@ -189,11 +188,11 @@ if(i<text.length){
 typing.innerHTML+=text.charAt(i);
 i++;
 }else{clearInterval(interval);}
-},40);
+},35);
 }
 startTyping();
 
-/* Shooting stars */
+/* Shooting stars (lighter for mobile performance) */
 function createShootingStar(){
 let star=document.createElement("div");
 star.className="shooting-star";
@@ -202,7 +201,7 @@ star.style.left=Math.random()*window.innerWidth*0.5+"px";
 document.body.appendChild(star);
 setTimeout(()=>star.remove(),2000);
 }
-setInterval(createShootingStar,2500);
+setInterval(createShootingStar,3000);
 
 /* Safe NO button */
 let noBtn=document.getElementById("noBtn");
@@ -218,8 +217,8 @@ noBtn.style.left=Math.random()*maxX+"px";
 noBtn.style.top=Math.random()*maxY+"px";
 }
 
-noBtn.addEventListener("mouseenter",moveNoButton);
 noBtn.addEventListener("touchstart",moveNoButton);
+noBtn.addEventListener("mouseenter",moveNoButton);
 
 /* YES */
 function acceptLove(){
@@ -230,7 +229,7 @@ launchSparkles();
 }
 
 function launchFireworks(){
-for(let i=0;i<30;i++){
+for(let i=0;i<20;i++){
 let fw=document.createElement("div");
 fw.className="firework";
 fw.style.left=Math.random()*window.innerWidth+"px";
@@ -241,7 +240,7 @@ setTimeout(()=>fw.remove(),1000);
 }
 
 function launchSparkles(){
-for(let i=0;i<40;i++){
+for(let i=0;i<30;i++){
 let sp=document.createElement("div");
 sp.className="sparkle";
 sp.style.left=(window.innerWidth/2)+"px";
@@ -249,7 +248,7 @@ sp.style.top=(window.innerHeight/2)+"px";
 document.body.appendChild(sp);
 
 let angle=Math.random()*2*Math.PI;
-let distance=Math.random()*200;
+let distance=Math.random()*150;
 
 sp.animate([
 {transform:"translate(0,0)",opacity:1},
