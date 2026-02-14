@@ -109,32 +109,16 @@ button:active{
 transform:scale(0.95);
 }
 
-/* REAL RING IMAGE */
+/* STATIC RING */
 .ring-container{
 margin-top:25px;
 display:none;
-perspective:1200px;
 }
 
 .ring-img{
-width:200px;
+width:220px;
 max-width:85%;
-animation:rotate3D 6s linear infinite;
 filter:drop-shadow(0 25px 30px rgba(0,0,0,0.6));
-transform-style:preserve-3d;
-}
-
-/* Vertical standing rotation */
-@keyframes rotate3D{
-0%{
-transform:rotateX(70deg) rotateY(0deg);
-}
-50%{
-transform:rotateX(70deg) rotateY(180deg);
-}
-100%{
-transform:rotateX(70deg) rotateY(360deg);
-}
 }
 
 /* Shooting stars */
